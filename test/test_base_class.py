@@ -1,8 +1,10 @@
 import pytest
 import ConfigParser
+import sys
 
 
 class TestBaseClass(object):
+    is_pypy = '__pypy__' in sys.builtin_module_names
     hostlist = []
     user = None
     password = None

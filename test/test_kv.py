@@ -1,4 +1,5 @@
 import unittest
+import pytest
 from test_base_class import TestBaseClass
 
 import aerospike
@@ -54,7 +55,7 @@ class KVTestCase(unittest.TestCase, TestBaseClass):
         def remove_record((key, meta, rec)):
             self.client.remove(key)
 
-        self.client.scan("test", "unittest").foreach(remove_record)
+        map(remove_record, self.client.scan("test", "unittest").results())
 
         recIn = {
             "i": 1234,
@@ -85,8 +86,7 @@ class KVTestCase(unittest.TestCase, TestBaseClass):
         self.assertTrue(meta is not None)
 
         # count records
-        count = 0
-        self.client.scan("test", "unittest").foreach(count_records)
+        count = len(self.client.scan("test", "unittest").results())
         assert count == 1
         self.assertEqual(count, 1, 'set should have 1 record')
 
@@ -124,8 +124,7 @@ class KVTestCase(unittest.TestCase, TestBaseClass):
         assert meta == None
 
         # count records
-        count = 0
-        self.client.scan("test", "unittest").foreach(count_records)
+        count = len(self.client.scan("test", "unittest").results())
         self.assertEqual(count, 0, 'set should be empty')
 
     def test_2(self):
@@ -141,7 +140,7 @@ class KVTestCase(unittest.TestCase, TestBaseClass):
         def each_record((key, meta, rec)):
             self.client.remove(key)
 
-        self.client.scan("test", "unittest").foreach(each_record)
+        map(each_record, self.client.scan("test", "unittest").results())
 
         recIn = {
             "i": 1234,
@@ -174,8 +173,7 @@ class KVTestCase(unittest.TestCase, TestBaseClass):
         self.assertTrue(meta is not None)
 
         # count records
-        count = 0
-        self.client.scan("test", "unittest").foreach(count_records)
+        count = len(self.client.scan("test", "unittest").results())
         self.assertEqual(count, 1, 'set should have 1 record')
 
         # read it
@@ -212,10 +210,10 @@ class KVTestCase(unittest.TestCase, TestBaseClass):
         assert meta == None
 
         # count records
-        count = 0
-        self.client.scan("test", "unittest").foreach(count_records)
+        count = len(self.client.scan("test", "unittest").results())
         self.assertEqual(count, 0, 'set should be empty')
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_3(self):
         """
         Using multiple keys

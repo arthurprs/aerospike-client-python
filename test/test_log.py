@@ -16,6 +16,7 @@ def handler(level, func, myfile, line):
     assert 1 == 1
 
 
+@pytest.mark.skipif("TestBaseClass.is_pypy")
 class TestLog(object):
     def test_set_log_level_correct(self):
         """

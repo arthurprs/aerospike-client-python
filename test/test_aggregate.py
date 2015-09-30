@@ -110,6 +110,7 @@ class TestAggregate(TestBaseClass):
 
         #assert "where() takes at least 1 argument (0 given)" in typeError.value
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_no_sec_index(self):
         """
             Invoke aggregate() with no secondary index
@@ -130,6 +131,7 @@ class TestAggregate(TestBaseClass):
             assert exception.code == 201L
             assert exception.msg == 'AEROSPIKE_ERR_INDEX_NOT_FOUND'
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_incorrect_ns_set(self):
         """
             Invoke aggregate() with incorrect ns and set
@@ -151,6 +153,7 @@ class TestAggregate(TestBaseClass):
             assert exception.msg == 'AEROSPIKE_ERR_REQUEST_INVALID'
 
     #@pytest.mark.xfail(reason="C client incorrectly sent status AEROSPIKE_ERR_UDF")
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_where_incorrect(self):
         """
             Invoke aggregate() with where is incorrect
@@ -167,6 +170,7 @@ class TestAggregate(TestBaseClass):
         query.foreach(user_callback)
         assert records == []
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_where_none_value(self):
         """
             Invoke aggregate() with where is null value
@@ -188,6 +192,7 @@ class TestAggregate(TestBaseClass):
             assert exception.msg == 'predicate is invalid.'
 
     #@pytest.mark.xfail(reason="C client incorrectly sent status AEROSPIKE_ERR_UDF")
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_where_bool_value(self):
         """
             Invoke aggregate() with where is bool value
@@ -204,6 +209,7 @@ class TestAggregate(TestBaseClass):
         query.foreach(user_callback)
         assert records[0] == 1
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_where_equals_value(self):
         """
             Invoke aggregate() with where is equal
@@ -220,6 +226,7 @@ class TestAggregate(TestBaseClass):
         query.foreach(user_callback)
         assert records[0] == 1
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_empty_module_function(self):
         """
             Invoke aggregate() with empty module and function
@@ -274,6 +281,8 @@ class TestAggregate(TestBaseClass):
             assert exception.code == -1L
             assert exception.msg == 'UDF: Execution Error 2 : function not found'
             """
+
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_correct_parameters(self):
         """
             Invoke aggregate() with correct arguments
@@ -291,6 +300,7 @@ class TestAggregate(TestBaseClass):
         query.foreach(user_callback)
         assert records[0] == 4
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_policy(self):
         """
             Invoke aggregate() with policy
@@ -309,6 +319,7 @@ class TestAggregate(TestBaseClass):
         query.foreach(user_callback, policy)
         assert records[0] == 4
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_extra_parameter(self):
         """
             Invoke aggregate() with extra parameter
@@ -330,6 +341,7 @@ class TestAggregate(TestBaseClass):
 
         assert "foreach() takes at most 2 arguments (3 given)" in typeError.value
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_extra_parameters_to_lua(self):
         """
             Invoke aggregate() with extra arguments
@@ -348,6 +360,7 @@ class TestAggregate(TestBaseClass):
         query.foreach(user_callback)
         assert records[0] == 4
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_extra_parameter_in_lua(self):
         """
             Invoke aggregate() with extra parameter in lua
@@ -384,6 +397,8 @@ class TestAggregate(TestBaseClass):
         except ClientError as exception:
             assert exception.code == -1L
             """
+
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_arguments_to_lua_function(self):
         """
             Invoke aggregate() with unicode arguments to lua function.
@@ -406,6 +421,7 @@ class TestAggregate(TestBaseClass):
              u'name1': 1}
         ]
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_unicode_module_and_function_name(self):
         """
             Invoke aggregate() with unicode module and function names
@@ -423,6 +439,7 @@ class TestAggregate(TestBaseClass):
         query.foreach(user_callback)
         assert records[0] == 4
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_multiple_foreach_on_same_query_object(self):
         """
             Invoke aggregate() with multiple foreach on same query object.
@@ -461,6 +478,7 @@ class TestAggregate(TestBaseClass):
         records = query.results()
         assert records[0] == 4
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_aggregate_with_correct_parameters_without_connection(self):
         """
             Invoke aggregate() with correct arguments without connection

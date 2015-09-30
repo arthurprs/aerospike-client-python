@@ -135,6 +135,7 @@ class TestQuery(TestBaseClass):
             assert exception.code == -2
             assert exception.msg == 'query() expects atleast 1 parameter'
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_correct_parameters(self):
         """
             Invoke query() with correct arguments
@@ -152,6 +153,7 @@ class TestQuery(TestBaseClass):
         assert records
         assert len(records) == 1
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_incorrect_ns_set(self):
         """
             Invoke query() with incorrect ns and set
@@ -170,6 +172,7 @@ class TestQuery(TestBaseClass):
             assert exception.code == 4L
             assert exception.msg == 'AEROSPIKE_ERR_REQUEST_INVALID'
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_ns_not_string(self):
         """
             Invoke query() with incorrect ns and set
@@ -187,6 +190,7 @@ class TestQuery(TestBaseClass):
             assert exception.code == -2L
             assert exception.msg == 'Namespace should be a string'
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_set_int(self):
         """
             Invoke query() with incorrect ns and set
@@ -204,6 +208,7 @@ class TestQuery(TestBaseClass):
             assert exception.code == -2L
             assert exception.msg == 'Set should be string, unicode or None'
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_incorrect_bin_name(self):
         """
             Invoke query() with incorrect bin name
@@ -219,6 +224,7 @@ class TestQuery(TestBaseClass):
         query.foreach(callback)
         assert len(records) == 0
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_without_callback_parameter(self):
         """
             Invoke query() with without callback
@@ -235,6 +241,7 @@ class TestQuery(TestBaseClass):
 
         assert "Required argument 'callback' (pos 1) not found" in typeError.value
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_nonindexed_bin(self):
         """
             Invoke query() with non-indexed bin
@@ -255,6 +262,7 @@ class TestQuery(TestBaseClass):
             assert exception.msg == 'AEROSPIKE_ERR_INDEX_NOT_FOUND'
             assert exception.name == None
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_where_incorrect(self):
         """
             Invoke query() with where is incorrect
@@ -283,6 +291,7 @@ class TestQuery(TestBaseClass):
             assert exception.code == -2L
             assert exception.msg == 'predicate is invalid.'
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_policy(self):
         """
             Invoke query() with policy
@@ -299,6 +308,7 @@ class TestQuery(TestBaseClass):
         query.foreach(callback, policy)
         assert len(records) == 1
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_extra_argument(self):
         """
             Invoke query() with extra argument
@@ -316,6 +326,7 @@ class TestQuery(TestBaseClass):
 
         assert "foreach() takes at most 2 arguments (3 given)" in typeError.value
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_incorrect_policy_value(self):
         """
             Invoke query() with incorrect policy
@@ -335,6 +346,7 @@ class TestQuery(TestBaseClass):
             assert exception.code == -2L
             assert exception.msg == 'timeout is invalid'
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_put_in_callback(self):
         """
             Invoke query() with put in callback
@@ -360,6 +372,7 @@ class TestQuery(TestBaseClass):
         self.client.remove(key)
         assert bins == {'test_age': 8, 'name': 'name8'}
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_correct_parameters_between(self):
         """
             Invoke query() with correct arguments and using predicate between
@@ -387,6 +400,7 @@ class TestQuery(TestBaseClass):
             assert exception.code == -2
             assert exception.msg == "predicate is invalid."
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_callback_contains_error(self):
         """
             Invoke query() with callback function contains an error
@@ -408,6 +422,7 @@ class TestQuery(TestBaseClass):
             assert exception.code == -2L
             assert exception.msg == "Callback function contains an error"
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_callback_returning_false(self):
         """
             Invoke query() with callback function returns false
@@ -474,6 +489,7 @@ class TestQuery(TestBaseClass):
             assert exception.code == -2L
             assert exception.msg == 'Bin name should be of type string'
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_correct_parameters_contains(self):
         """
             Invoke query() with correct arguments and using predicate contains
@@ -490,6 +506,7 @@ class TestQuery(TestBaseClass):
         query.foreach(callback)
         assert len(records) == 2
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_correct_parameters_containsstring(self):
         """
             Invoke query() with correct arguments and using predicate contains
@@ -507,6 +524,7 @@ class TestQuery(TestBaseClass):
         query.foreach(callback)
         assert len(records) == 3
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_correct_parameters_rangecontains(self):
         """
             Invoke query() with correct arguments and using predicate contains
@@ -523,6 +541,7 @@ class TestQuery(TestBaseClass):
         query.foreach(callback)
         assert len(records) == 2
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_correct_parameters_containsstring_mapkeys(self):
         """
             Invoke query() with correct arguments and using predicate contains
@@ -553,6 +572,7 @@ class TestQuery(TestBaseClass):
         def callback((key, metadata, record)):
             records.append(record)
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_multiple_foreach_on_same_query_object(self):
         """
             Invoke query() with multple foreach() call on same query object
@@ -569,6 +589,7 @@ class TestQuery(TestBaseClass):
         query.foreach(callback)
         assert len(records) == 1
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_correct_parameters_containsnumeric_mapvalues(self):
         """
             Invoke query() with correct arguments and using predicate contains
@@ -586,6 +607,7 @@ class TestQuery(TestBaseClass):
         query.foreach(callback)
         assert len(records) == 2
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_correct_parameters_rangecontains(self):
         """
             Invoke query() with correct arguments and using predicate contains
@@ -603,6 +625,7 @@ class TestQuery(TestBaseClass):
         query.foreach(callback)
         assert len(records) == 8
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_correct_parameters_rangecontains_notuple(self):
         """
             Invoke query() with correct arguments and using predicate contains
@@ -620,6 +643,7 @@ class TestQuery(TestBaseClass):
         query.foreach(callback)
         assert len(records) == 8
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_correct_parameters_containsstring_mapvalues_notuple(
         self
     ):
@@ -639,6 +663,7 @@ class TestQuery(TestBaseClass):
         query.foreach(callback)
         assert len(records) == 1
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_correct_parameters_containsstring_notuple(self):
         """
             Invoke query() with correct arguments and using predicate contains
@@ -656,6 +681,7 @@ class TestQuery(TestBaseClass):
         query.foreach(callback)
         assert len(records) == 3
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_correct_parameters_between_notuple(self):
         """
             Invoke query() with correct arguments and using predicate between
@@ -672,6 +698,7 @@ class TestQuery(TestBaseClass):
         query.foreach(callback)
         assert len(records) == 4
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_policy_notuple(self):
         """
             Invoke query() with policy
@@ -716,6 +743,7 @@ class TestQuery(TestBaseClass):
             'addr': u'name7'
         }
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_correct_parameters_without_connection(self):
         """
             Invoke query() with correct arguments without connection
@@ -739,6 +767,7 @@ class TestQuery(TestBaseClass):
             assert exception.code == 11L
             assert exception.msg == 'No connection to aerospike cluster'
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_policy_on_none_set_index(self):
         """
             Invoke query() with policy on none set index
@@ -756,6 +785,7 @@ class TestQuery(TestBaseClass):
         query.foreach(callback, policy)
         assert len(records) == 0
 
+    @pytest.mark.skipif("TestBaseClass.is_pypy")
     def test_query_with_only_ns(self):
         """
             Invoke query() with policy on none set index

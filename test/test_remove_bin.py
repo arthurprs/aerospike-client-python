@@ -12,6 +12,7 @@ except:
     print "Please install aerospike python client."
     sys.exit(1)
 
+
 class TestRemovebin(object):
     def setup_class(cls):
         """

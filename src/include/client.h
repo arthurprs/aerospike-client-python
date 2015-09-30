@@ -20,6 +20,13 @@
 #include <stdbool.h>
 #include "types.h"
 
+#ifdef PYPY_VERSION
+	#define PyByteArray_FromStringAndSize PyString_FromStringAndSize
+	#define PyByteArray_AsString PyString_AsString
+	#define PyByteArray_Size PyString_Size
+	#define PyByteArray_Check PyString_Check
+#endif
+
 #define TRACE() printf("%s:%d\n",__FILE__,__LINE__)
 
 /*******************************************************************************
