@@ -483,7 +483,7 @@ as_status pyobject_to_record(as_error * err, PyObject * py_rec,
 				ret_val = as_record_set_strp(rec, name, strdup(val), true);
 				Py_DECREF(py_ustr);
 			}
-			else if ( PyString_Check(value) ) {
+			else if ( PyString_Check(value) && strstr(name, "_blob") == NULL ) {
 				char * val = PyString_AsString(value);
 				ret_val = as_record_set_strp(rec, name, val, false);
 			}
@@ -595,7 +595,7 @@ as_status pyobject_to_astype_write(as_error * err, char *bin_name,  PyObject * p
 		int64_t l = (int64_t) PyLong_AsLongLong(py_value);
 		*val = (as_val *) as_integer_new(l);
 	}
-	else if ( PyString_Check(py_value) ) {
+	else if ( PyString_Check(py_value) && strstr(bin_name, "_blob") == NULL ) {
 		char * s = PyString_AsString(py_value);
 		*val = (as_val *) as_string_new(s, false);
 	}
